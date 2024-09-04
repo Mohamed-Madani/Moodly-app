@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import { gradients, baseRating, data } from "@/utils";
 
 const months = {
@@ -28,14 +29,28 @@ const dayList = [
   "Saturday",
 ];
 
+
 export default function Calendar(props) {
 
-    const { demo } = props;
-  const year = 2024;
-  const month = "September";
-  const monthNow = new Date(year, Object.keys(months).indexOf(month), 1);
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const [selectedMonth, setSelectedMonth] = useState(Object.keys(months)[currentMonth]);
+  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
+
+  function handleIncrementMonth(value) {
+    //value is either 1 or -1
+    //if we hit the bounds of the months, then we can just adjust the year that is displayed
+
+  }
+
+  console.log('SELECTED MONTH:', selectedMonth)
+
+    const { demo, data, handleSetMood } = props;
+  // const year = 2024;
+  // const month = "September";
+  const monthNow = new Date(selectedYear, Object.keys(selectedMonth).indexOf(selectedMonth), 1);
   const firstDayOfMonth = monthNow.getDay();
-  const dayInMonth = new Date(year, Object.keys(month).indexOf(month) + 1, 0).getDate();
+  const dayInMonth = new Date(selectedYear, Object.keys(selectedMonth).indexOf(selectedMonth) + 1, 0).getDate();
 
   const dayToDisplay = firstDayOfMonth + dayInMonth;
   const numRows = Math.floor(dayToDisplay / 7) + (dayToDisplay % 7 ? 1 : 0);
@@ -56,7 +71,7 @@ export default function Calendar(props) {
             }
 
             let color = demo ? gradients.indigo[baseRating[dayIndex]] :
-            dayIndex in data ? gradients.indigo[data[dayIndex]] : 'white';
+            (data && dayIndex in data) ? gradients.indigo[data[dayIndex]] : 'white';
 
 
             return (

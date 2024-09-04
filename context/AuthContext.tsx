@@ -73,6 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const value = {
         currentUser,
         userDataObj,
+        setUserDataObj,
         signup,
         logout,
         login,

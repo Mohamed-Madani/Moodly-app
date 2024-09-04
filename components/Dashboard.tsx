@@ -9,14 +9,23 @@ import { useAuth } from '@/context/AuthContext'
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
-    const [currentUser, userDataObj] = useAuth()
+    const [currentUser, userDataObj, setUserDataObj] = useAuth()
     const [data, setData] = useState({})
 
     function countValue(){
 
     }
 
-    function handleSetMood(mood: string) {
+    function handleSetMood(mood, day, month, year) {
+        const newData = {...userDataObj}
+        if (!newData?.[year]) {
+            newData[year] = {}
+        }
+
+        if (!newData?.[year]?.[month]) {
+            newData[year][month] = {}
+        }
+        newData[year][month][day] = mood
         //Update the current state
         //Update the globaal state
         //Update firebase
