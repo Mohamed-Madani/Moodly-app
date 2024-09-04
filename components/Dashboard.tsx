@@ -1,11 +1,26 @@
+'use client'
 import React from 'react'
 import { Fugaz_One } from "next/font/google";
 import Calendar from './LandingPage/Calendar';
+import { useEffect, useState } from 'react'
+import { useAuth } from '@/context/AuthContext'
 
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
+    const [currentUser, userDataObj] = useAuth()
+    const [data, setData] = useState({})
+
+    function countValue(){
+
+    }
+
+    function handleSetMood(mood: string) {
+        //Update the current state
+        //Update the globaal state
+        //Update firebase
+    }
     
     
     const statuses = {
@@ -21,6 +36,13 @@ export default function Dashboard() {
         'Excited': '😍',
         'Lonely': '😭',
     }
+
+    useEffect(() => {
+        if (!currentUser || !userDataObj) {
+            return
+        }
+        setData(userDataObj)
+    }, [currentUser, userDataObj])
 
 
 
@@ -49,7 +71,7 @@ export default function Dashboard() {
                 )
               })}
             </div>
-            <Calendar />
+            <Calendar data={data} handleSetMood={handleSetMood}/>
     </div>
   )
 }

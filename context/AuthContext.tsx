@@ -16,7 +16,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [currentUser, setCurrentUser] = useState(null)
-    const [userDataObj, setUserDataObj] = useState({})
+    const [userDataObj, setUserDataObj] = useState(null)
     const [loading, setLoading] = useState(true)
 
     //Auth Handlers
@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     function logout() {
-        setUserDataObj({})
+        setUserDataObj(null)
         setCurrentUser(null)
         return signOut(auth)
     }
@@ -44,6 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 setCurrentUser(user)
 
                 if (!user) {
+                    console.log('No user found')
                     return
                 }
 
