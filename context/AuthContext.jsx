@@ -1,5 +1,5 @@
 'use client'
-import { auth, db } from '@/firebase'
+import { auth, db } from '@/firebase.js'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import React, { useContext, useState, useEffect } from 'react'

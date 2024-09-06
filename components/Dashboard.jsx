@@ -5,7 +5,7 @@ import Calendar from "./LandingPage/Calendar";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db } from "@/firebase.js";
 import Login from "@/components/Login";
 import Loading from "@/components/Loading";
 
