@@ -32,6 +32,7 @@ const dayList = [
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Calendar(props) {
+  // Extracting props and setting initial state for the current month and year
   const { demo, completeData, handleSetMood } = props;
   const now = new Date();
   const currMonth = now.getMonth();
@@ -40,25 +41,29 @@ export default function Calendar(props) {
   );
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
 
+  // Calculating the numeric representation of the selected month
   const numericMonth = monthsArr.indexOf(selectedMonth);
+  // Retrieving data for the selected year and month from completeData
   const data = completeData?.[selectedYear]?.[numericMonth] || {};
 
+  // Function to handle incrementing or decrementing the month
   function handleIncrementMonth(val) {
-    // value +1 -1
-    // if we hit the bounds of the months, then we can just adjust the year that is displayed instead
+    // Adjusting the month and year based on the increment value
     if (numericMonth + val < 0) {
-      // set month value = 11 and decrement the year
+      // Decrementing the year and setting the month to December
       setSelectedYear((curr) => curr - 1);
       setSelectMonth(monthsArr[monthsArr.length - 1]);
     } else if (numericMonth + val > 11) {
-      // set month val = 0 and increment the year
+      // Incrementing the year and setting the month to January
       setSelectedYear((curr) => curr + 1);
       setSelectMonth(monthsArr[0]);
     } else {
+      // Adjusting the month within the same year
       setSelectMonth(monthsArr[numericMonth + val]);
     }
   }
 
+  // Calculating the first day of the month and the number of days in the month
   const monthNow = new Date(
     selectedYear,
     Object.keys(months).indexOf(selectedMonth),
@@ -67,12 +72,14 @@ export default function Calendar(props) {
   const firstDayOfMonth = monthNow.getDay();
   const daysInMonth = new Date(
     selectedYear,
-    Object.keys(selectedMonth).indexOf(selectedMonth) + 1,
+    Object.keys(months).indexOf(selectedMonth) + 1,
     0
   ).getDate();
 
+  // Total days to display including the first day of the month
   const daysToDisplay = firstDayOfMonth + daysInMonth;
 
+  // Calculating the number of rows needed to display the days of the month
   const numRows = Math.floor(daysToDisplay / 7) + (daysToDisplay % 7 ? 1 : 0);
 
   return (

@@ -12,93 +12,102 @@ import Loading from "@/components/Loading";
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
-    const { currentUser, userDataObj, setUserDataObj, loading } = useAuth()
-    const [data, setData] = useState({})
+    // Extracting necessary state and functions from the useAuth hook
+    const { currentUser, userDataObj, setUserDataObj, loading } = useAuth();
+    // Initializing state for data and setting the current date
+    const [data, setData] = useState({});
     const now = new Date();
 
-  function countValue() {
-    let total_number_of_days = 0;
-    let sum_moods=  0 ;
-    for (let year in data) {
-      for (let month in data[year]) {
-        for (let day in data[year][month]) {
-          let days_mood = data[year][month][day];
-          total_number_of_days++;
-          sum_moods += days_mood;
+    // Function to count the total number of days and the average mood
+    function countValue() {
+      let total_number_of_days = 0;
+      let sum_moods = 0;
+      // Iterating through the data to calculate the total number of days and sum of moods
+      for (let year in data) {
+        for (let month in data[year]) {
+          for (let day in data[year][month]) {
+            let days_mood = data[year][month][day];
+            total_number_of_days++;
+            sum_moods += days_mood;
+          }
         }
       }
+      // Returning the total number of days and the average mood
+      return { num_days: total_number_of_days, average_mood: sum_moods / total_number_of_days };
     }
-    return {num_days: total_number_of_days, average_mood: sum_moods / total_number_of_days};
-  }
 
-  const statuses = {
-   ...countValue(),
-    time_remaining: `${now.getHours()}H ${now.getMinutes()}`,
-  };
+    // Object to hold various statuses including the countValue and time remaining
+    const statuses = {
+      ...countValue(),
+      time_remaining: `${now.getHours()}H ${now.getMinutes()}`,
+    };
 
-  async function handleSetMood(mood) {
-    
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const day = now.getDate();
-    try {
-      const newData = { ...userDataObj };
-      if (!newData?.[year]) {
-        newData[year] = {};
-      }
+    // Async function to handle setting the mood
+    async function handleSetMood(mood) {
+      // Extracting the current year, month, and day
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const day = now.getDate();
+      try {
+        // Creating a new data object with the updated mood
+        const newData = { ...userDataObj };
+        if (!newData?.[year]) {
+          newData[year] = {};
+        }
 
-      if (!newData?.[year]?.[month]) {
-        newData[year][month] = {};
-      }
-      newData[year][month][day] = mood;
-      //Update the current state
-      setData(newData);
-      //Update the globaal state
-      setUserDataObj(newData);
-      //Update firebase
-      const docRef = doc(db, "users", currentUser.uid);
-      const res = await setDoc(
-        docRef,
-        {
-          [year]: {
-            [month]: {
-              [day]: mood,
+        if (!newData?.[year]?.[month]) {
+          newData[year][month] = {};
+        }
+        newData[year][month][day] = mood;
+        // Updating the current state and global state with the new data
+        setData(newData);
+        setUserDataObj(newData);
+        // Updating the Firebase database with the new data
+        const docRef = doc(db, "users", currentUser.uid);
+        const res = await setDoc(
+          docRef,
+          {
+            [year]: {
+              [month]: {
+                [day]: mood,
+              },
             },
           },
-        },
-        { merge: true }
-      );
-    } catch (error) {
-      console.log("failed to set data: ", error);
+          { merge: true }
+        );
+      } catch (error) {
+        console.log("failed to set data: ", error);
+      }
     }
-  }
 
-  
+    // Object to hold the moods and their corresponding emojis
+    const moods = {
+      Sad: "😞",
+      Lonely: "😭",
+      Happy: "😀",
+      Cool: "😎",
+      Excited: "🤩",
+      
+      
+    };
 
-  const moods = {
-    Happy: "😀",
-    Sad: "😞",
-    Angry: "😡",
-    Excited: "😍",
-    Lonely: "😭",
-  };
+    // Effect to set the data state when the component mounts or when userDataObj changes
+    useEffect(() => {
+      if (!currentUser || !userDataObj) {
+        return;
+      }
+      setData(userDataObj);
+    }, [currentUser, userDataObj]);
 
-  useEffect(() => {
-    if (!currentUser || !userDataObj) {
-      return;
+    // Loading state handling
+    if (loading) {
+      return <Loading />;
     }
-    setData(userDataObj);
-  }, [currentUser, userDataObj]);
 
-
-  if (loading) {
-  return <Loading />;
-  }
-
-
-  if (!currentUser) {
-    return <Login />;
-  }
+    // Redirecting to Login if there is no current user
+    if (!currentUser) {
+      return <Login />;
+    }
 
   return (
     <div className="flex flex-col flex-1 gap-8 sm:gap-10 md:gap-16">

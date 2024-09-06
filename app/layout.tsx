@@ -6,6 +6,8 @@ import { AuthProvider } from "@/context/AuthContext";
 import Head from "next/head";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Logout from '@/components/Logout';
+import Image from 'next/image'
+import moodly from '@moodly.svg'
 
 
 
@@ -26,7 +28,8 @@ export default function RootLayout({
   const header = (
     <header className="p-4 sm:p-8 flex items-center justify-between gap-4">
       <Link href="/">
-      <h1 className={`${fugaz.className} text-base sm:text-lg textGradient `}>Moodly</h1>
+      {/* <h1 className={`${fugaz.className} text-base sm:text-lg textGradient `}>Moodly</h1> */}
+      <Image src="/moodly.svg" alt="Moodly Logo" width={50} height={50}/>
       </Link>
       <Logout/>
     </header>

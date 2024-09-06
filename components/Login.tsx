@@ -7,18 +7,24 @@ import { useAuth } from "@/context/AuthContext";
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Login() {
+  // State variables for email, password, registration mode, and authentication status
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const [authenticating, setAuthenticating] = useState(false);
+  // Extracting signup and login functions from the useAuth hook
   const { signup, login } = useAuth();
 
+  // Async function to handle form submission for both login and registration
   async function handleSubmit() {
+    // Validation for email, password, and password length
     if (!email || !password || password.length < 6) {
       return;
     }
+    // Setting authentication status to true
     setAuthenticating(true);
     try {
+      // Conditional logic to determine whether to call signup or login based on isRegister state
       if (isRegister) {
         console.log("Sining Up a new user");
         await signup(email, password);
@@ -29,6 +35,7 @@ export default function Login() {
     } catch (error) {
       console.log(error);
     } finally {
+      // Setting authentication status back to false after the operation
       setAuthenticating(false);
     }
   }
