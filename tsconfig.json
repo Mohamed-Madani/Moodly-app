@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jsx", "app/layout.jsx", "components/Login.jsx", "components/Logout.jsx", "components/Main.jsx", "components/Dashboard.jsx", "context/AuthContext.jsx", "app/dashboard/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jsx", "app/layout.jsx", "components/Login.jsx", "components/Logout.jsx", "components/Main.jsx", "components/Dashboard.jsx", "context/AuthContext.jsx", "app/dashboard/page.jsx", "firebase.js"],
   "exclude": ["node_modules"]
 }
