@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+
 import { Fugaz_One, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { AuthProvider } from "@/context/AuthContext.jsx";
+import { AuthProvider } from "@/context/AuthContext";
 import Head from "next/head";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Logout from '@/components/Logout';
@@ -14,12 +14,12 @@ import moodly from '@moodly.svg'
 const opensans = Open_Sans({ subsets: ["latin"] });
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
-export const metadata: Metadata = {
+export const metadata= {
   title: "Moodly",
   description: "Track your daily mood, every day of the year.",
 };
 
-export default function RootLayout({children}) {
+export default function RootLayout({ children }){
 
   const header = (
     <header className="p-4 sm:p-8 flex items-center justify-between gap-4">

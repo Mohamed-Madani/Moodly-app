@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Main(props : any) {
+export default function Main(props) {
     const { children } = props
 
   return (
