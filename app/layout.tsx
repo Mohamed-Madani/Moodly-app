@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Track your daily mood, every day of the year.",
 };
 
-export default function RootLayout({children}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
 
   const header = (
     <header className="p-4 sm:p-8 flex items-center justify-between gap-4">
@@ -39,7 +39,12 @@ export default function RootLayout({children}) {
 
   return (
     <html lang="en">
-      <Head />
+      <head>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      />
+    </head>
       <AuthProvider>
       <body className={`${opensans.className} w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800`}>
         {header}

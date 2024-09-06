@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Head() {
+export default function Head({children}) {
   return (
     <head>
       <link
