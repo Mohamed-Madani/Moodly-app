@@ -3,6 +3,11 @@ import { Fugaz_One, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { AuthProvider } from "@/context/AuthContext";
+import Head from "next/head";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Logout from '@/components/Logout';
+
+
 
 const opensans = Open_Sans({ subsets: ["latin"] });
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
@@ -23,9 +28,7 @@ export default function RootLayout({
       <Link href="/">
       <h1 className={`${fugaz.className} text-base sm:text-lg textGradient `}>Moodly</h1>
       </Link>
-      <div className="flex items-center justify-between">
-        PLACEHOLDER
-      </div>
+      <Logout/>
     </header>
   )
 
@@ -37,6 +40,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <Head />
       <AuthProvider>
       <body className={`${opensans.className} w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800`}>
         {header}

@@ -3,6 +3,7 @@ import { Fugaz_One } from "next/font/google";
 import Button from './Button';
 import Calendar from './Calendar';
 import Link from 'next/link';
+import CallToAction from './CallToAction';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
@@ -12,17 +13,8 @@ export default function Hero() {
         <h1 className={`${fugaz.className} text-5xl sm:text-text-6xl md:text-7xl text-center`}><span className='textGradient'>Moodly</span> helps you track your <span className='textGradient'>daily</span> mood!</h1>
 
         <p className='text-lg sm:text-xl md:text-2xl text-center w-full mx-auto max-w-[600px]'>Create your own mood record and see how you feel on <span className='font-semibold'>every day of every year.</span></p>
-
-        <div className='grid grid-cols-2 gap-4 w-fit mx-auto'>
-          <Link href="/dashboard">
-            <Button text="Sign Up"/>
-          </Link>
-
-          <Link href="/dashboard">
-            <Button text="Login" dark/>
-          </Link>
-        </div>
-        <Calendar/>
+        <CallToAction/>
+        <Calendar demo/>
         </div>
   )
 }
