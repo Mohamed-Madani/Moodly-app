@@ -19,11 +19,7 @@ export const metadata: Metadata = {
   description: "Track your daily mood, every day of the year.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
 
   const header = (
     <header className="p-4 sm:p-8 flex items-center justify-between gap-4">
